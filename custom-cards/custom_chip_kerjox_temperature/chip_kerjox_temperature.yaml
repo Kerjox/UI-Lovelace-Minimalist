@@ -1,0 +1,30 @@
+---
+### Chip Kerjox Temperature ###
+chip_kerjox_temperature:
+  template:
+    - "chips"
+    - "ulm_actions_card"
+  tap_action:
+    action: "navigate"
+    navigation_path: "[[[ return variables.ulm_chip_navigate_path; ]]]"
+  triggers_update: "all"
+  label: |
+    [[[
+      var icon =  "🌡️"
+      function convertTemperature(temp) {
+        if (parseFloat(temp) == temp && Math.floor(temp) != temp) {
+            return parseFloat(temp).toFixed(1);
+        }
+        return temp;
+      }
+      var outside_temp = states[variables.ulm_chip_temperature_outside].state;
+      var inside_temp = states[variables.ulm_chip_temperature_inside].state;
+      if (variables.ulm_chip_temperature_inside) {
+        inside_temp = states[variables.ulm_chip_temperature_inside].state;
+      }
+      var label = icon  + " " + convertTemperature(outside_temp) + "°";
+      if (inside_temp) {
+        label = label + " / " + convertTemperature(inside_temp) + "°";
+      }
+      return label;
+    ]]]
