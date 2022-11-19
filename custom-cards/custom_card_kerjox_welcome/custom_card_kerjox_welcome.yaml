@@ -392,8 +392,8 @@ card_kerjox_welcome_topbar:
   show_name: true
   styles:
     grid:
-      - grid-template-areas: "'item1 item2 item3 item4'"
-      - grid-template-columns: "1fr 3.5fr 3.5fr 1fr"
+      - grid-template-areas: "'item1 item2 item3'"
+      - grid-template-columns: "3.5fr 3.5fr 3.5fr"
       - grid-template-rows: "min-content"
       - justify-items: "center"
     card:
@@ -404,38 +404,6 @@ card_kerjox_welcome_topbar:
       - "--mdc-ripple-press-opacity": 0 # prevent click animation
   custom_fields:
     item1:
-      card:
-        type: "custom:button-card"
-        template: "chips"
-        tap_action:
-          action: "call-service"
-          service: "input_boolean.toggle"
-          service_data:
-            entity_id: "[[[ return variables.ulm_card_welcome_collapse ]]]"
-        show_icon: true
-        icon: "mdi:chevron-up"
-        entity: "[[[ return variables.ulm_card_welcome_collapse ]]]"
-        styles:
-          grid:
-            - grid-template-areas: "'i'"
-          card:
-            - box-shadow: >
-                [[[
-                  if (hass.themes.darkMode){
-                    return "0px 2px 4px 0px rgba(0,0,0,0.80)";
-                  } else {
-                    return "var(--box-shadow)";
-                  }
-                ]]]
-            - visibility: "[[[ return variables.ulm_card_welcome_collapse ? 'visible' : 'hidden'; ]]]"
-            - "--mdc-ripple-press-opacity": 0.12 # allow click animation
-        state:
-          - value: "on"
-            icon: "mdi:chevron-down"
-            styles:
-              icon:
-                - color: "rgb(var(--color-theme))"
-    item2:
       card:
         type: "custom:button-card"
         template: "chip_weather_date"
@@ -457,7 +425,7 @@ card_kerjox_welcome_topbar:
                   }
                 ]]]
             - "--mdc-ripple-press-opacity": 0.12 # allow click animation
-    item3:
+    item2:
       card:
         type: "custom:button-card"
         template: "chip_kerjox_temperature"
@@ -478,19 +446,20 @@ card_kerjox_welcome_topbar:
                   }
                 ]]]
             - "--mdc-ripple-press-opacity": 0.12
+            - type: "custom:button-card"
 
-    item4:
+    item3:
       card:
         type: "custom:button-card"
-        template: "chip_mdi_icon_only"
+        template: "chip_kerjox_power_consumption"
         variables:
-          ulm_chip_mdi_icon_only_icon: "mdi:cog-outline"
+          ulm_chip_electric_price: sensor.pvpc
         tap_action:
           action: "navigate"
-          navigation_path: "/config/dashboard"
+          navigation_path: "energy"
         styles:
           card:
-            - align-self: "end"
+            - width: "100px"
             - box-shadow: >
                 [[[
                   if (hass.themes.darkMode){
@@ -499,4 +468,4 @@ card_kerjox_welcome_topbar:
                     return "var(--box-shadow)";
                   }
                 ]]]
-            - "--mdc-ripple-press-opacity": 0.12 # allow click animation
+            - "--mdc-ripple-press-opacity": 0.12 
